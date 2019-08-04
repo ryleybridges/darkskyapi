@@ -31,19 +31,14 @@ $(document).ready(function(){
 
   var map;
   function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
-      });
+    var input = document.getElementById('location');
+    var options = {
+      componentRestrictions: {country: 'nz'}
+    };
+    var autoComplete = new google.maps.places.Autocomplete(input, options);
+  }
 
-      var input = document.getElementById('searchTextField');
-      var options = {
-        types: ['(cities)'],
-        componentRestrictions: {country: 'nz'}
-      };
-
-      autocomplete = new google.maps.places.Autocomplete(input, options);
-    }
+  google.maps.event.addDomListener(window, 'load', initMap);
 
 
 });
