@@ -17,7 +17,7 @@ $(document).ready(function(){
 
   getWeatherData = () => {
     $.ajax({
-      url: `https://api.darksky.net/forecast/${darkSkyKeyß}/-41.2865,174.7762`,
+      url: `https://api.darksky.net/forecast/${darkSkyKey}/-41.2865,174.7762`,
       type: 'GET',
       dataType: 'jsonp',
       success: function(dataFromDarkSky){
