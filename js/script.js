@@ -1,5 +1,17 @@
 $(document).ready(function(){
 
+  function initialize(){
+    var ac = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
+    google.maps.event.addListener(ac, 'place_changed', function(){
+      weatherData();
+    });
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+});
+
+function weatherData(){
   let darkSkyKey;
 
   $.ajax({
@@ -8,7 +20,7 @@ $(document).ready(function(){
     dataType: 'json',
     success: function(keys){
       darkSkyKey = keys['darkSkyKey'];
-      getWeatherData();
+
     },
     error: function(){
       console.log('cannot find config.json file, cannot run application');
@@ -21,24 +33,11 @@ $(document).ready(function(){
       type: 'GET',
       dataType: 'jsonp',
       success: function(dataFromDarkSky){
-        console.log(dataFromDarkSky);
+        console.log("all good");
       },
       error: function(){
         console.log('error, something went wrong');
       }
     });
   }
-
-  var map;
-  function initMap() {
-    var input = document.getElementById('location');
-    var options = {
-      componentRestrictions: {country: 'nz'}
-    };
-    var autoComplete = new google.maps.places.Autocomplete(input, options);
-  }
-
-  google.maps.event.addDomListener(window, 'load', initMap);
-
-
-});
+}
