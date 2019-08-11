@@ -1,5 +1,30 @@
 $(document).ready(function(){
 
+  function initialize(){
+    var map;
+    var request;
+    var ac = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
+    google.maps.event.addListener(ac, 'place_changed', function(){
+      service = new google.maps.places.PlacesService(map);
+      service.textSearch(request, callback);
+
+      function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            console.log(place);
+          }
+        }
+      }
+
+    });
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+});
+
+function weatherData(){
   let darkSkyKey;
 
   $.ajax({
@@ -8,7 +33,7 @@ $(document).ready(function(){
     dataType: 'json',
     success: function(keys){
       darkSkyKey = keys['darkSkyKey'];
-      getWeatherData();
+
     },
     error: function(){
       console.log('cannot find config.json file, cannot run application');
@@ -21,13 +46,11 @@ $(document).ready(function(){
       type: 'GET',
       dataType: 'jsonp',
       success: function(dataFromDarkSky){
-        console.log(dataFromDarkSky);
+        console.log("all good");
       },
       error: function(){
         console.log('error, something went wrong');
       }
     });
   }
-
-
-});
+}
